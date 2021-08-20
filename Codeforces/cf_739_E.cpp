@@ -126,19 +126,68 @@ char give(int i, int j, vector<vector<char>> &final)
 }
 int solve()
 {
-    ll n;
-    cin >> n;
-    vector<ll> a(n);
-    rep(i, n)
+    string s;
+    cin >> s;
+    vector<int> st(26, 0);
+    string rm = "";
+    string final = "";
+    for (int i = s.size() - 1; i >= 0; i--)
     {
-        cin >> a[i];
+        if (st[s[i] - 'a'] == 0)
+        {
+            st[s[i] - 'a'] = 1;
+            rm = rm + s[i];
+        }
+        else
+        {
+            st[s[i] - 'a']++;
+        }
     }
-    ll mx = 1;
-    rep2(i, 1, n - 1)
+    reverse(rm.begin(), rm.end());
+    int total = 0;
+    for (int i = 0; i < rm.size(); i++)
     {
-        mx = max(mx, a[i] * a[i - 1]);
+        if (st[rm[i] - 'a'] % (i + 1) != 0)
+        {
+            cout << -1 << endl;
+            return 0;
+        }
+        st[rm[i] - 'a'] = st[rm[i] - 'a'] / (i + 1);
+        total += st[rm[i] - 'a'];
     }
-    cout << mx << endl;
+    vector<int> st2(26, 0);
+    for (int i = 0; i < total; i++)
+    {
+        final = final + s[i];
+        st2[s[i] - 'a']++;
+    }
+    if (!equal(st.begin(), st.end(), st2.begin(), st2.end()))
+    {
+        cout << -1 << endl;
+        return 0;
+    }
+    int start = total;
+    string tmp = final;
+    string sb = final;
+    for (int i = 0; i < rm.size(); i++)
+    {
+        string tmp2 = "";
+        for (int j = 0; j < tmp.size(); j++)
+        {
+            if (tmp[j] != rm[i])
+            {
+                tmp2 += tmp[j];
+            }
+        }
+        tmp = tmp2;
+        sb += tmp2;
+    }
+    if (sb != s)
+    {
+        cout << -1 << endl;
+        return 0;
+    }
+    cout << final << " " << rm << endl;
     return 0;
 }
 
