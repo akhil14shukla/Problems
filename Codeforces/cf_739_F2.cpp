@@ -31,10 +31,10 @@
 #define arep(arrat) for (const auto &value : array)
 using namespace std;
 
-bool sortinrev(const int &a,
-               const int &b)
+bool sortinrev(const pair<int, int> &a,
+               const pair<int, int> &b)
 {
-    return (a > b);
+    return (a.first > b.first);
 }
 void swap(int *a, int *b)
 {
@@ -124,58 +124,8 @@ char give(int i, int j, vector<vector<char>> &final)
     }
     return 'w';
 }
-
-ll solve()
-{
-    string s;
-    cin >> s;
-    vector<ll> st(26, 0);
-    string rm = "";
-    string final = "";
-    for (ll i = s.size() - 1; i >= 0; i--)
-    {
-        if (st[s[i] - 'a'] == 0)
-        {
-            st[s[i] - 'a'] = 1;
-            rm = rm + s[i];
-        }
-        else
-        {
-            st[s[i] - 'a']++;
-        }
-    }
-    reverse(rm.begin(), rm.end());
-    ll total = 0;
-    for (ll i = 0; i < rm.size(); i++)
-    {
-        if (st[rm[i] - 'a'] % (i + 1) != 0)
-        {
-            cout << -1 << endl;
-            return 0;
-        }
-        st[rm[i] - 'a'] = st[rm[i] - 'a'] / (i + 1);
-        total += st[rm[i] - 'a'];
-    }
-    final = s.substr(0, total);
-    // for (ll i = 0; i < total; i++)
-    // {
-    //     final = final + s[i];
-    // }
-    ll start = total;
-    string tmp = final;
-    string sb = final;
-    for (ll i = 0; i < rm.size() - 1; i++)
-    {
-        tmp.erase(remove(tmp.begin(), tmp.end(), rm[i]), tmp.end());
-        sb += tmp;
-    }
-    if (sb != s)
-    {
-        cout << -1 << endl;
-        return 0;
-    }
-    cout << final << " " << rm << endl;
-    return 0;
+int solve (){
+    
 }
 
 int main()
@@ -183,7 +133,7 @@ int main()
     std::ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     //use auto instead of data types
-    ll t;
+    int t;
     cin >> t;
     while (t--)
         solve();
